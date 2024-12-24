@@ -8,10 +8,11 @@ class ExcelsController < ActionController::Base
       p.workbook.add_worksheet(:name => "Work Hours") do |sheet|
 
         # Это делает формат со стороны гема
-      	date_style = p.workbook.styles.add_style(format_code: 'dd-mm-yyyy hh:mm:ss', alignment: { horizontal: :center })
+        date_style = p.workbook.styles.add_style(types: [:date], format_code: 'dd-mm-yyyy hh:mm:ss', alignment: { horizontal: :center })
 
         # Если хочешь подключить формат со стороны гема, раскомментируй style: date_style
-        sheet.add_row [define_date]#, style: date_style
+        #
+        sheet.add_row [define_date], style: date_style
       end
 
       p.serialize(excel_file_path)
@@ -24,7 +25,7 @@ class ExcelsController < ActionController::Base
 
   def define_date
     # Поиграй с этой строчкой
-    "23.12.2024 12:00".to_datetime.strftime("%Y-%m-%d %H:%M:%S.%L")
+    "23.12.2024 12:15:30".to_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
     # Эти методы я нарыл и их пока изучаю, может быть с ними все сработает
   	# serial_date = Axlsx::DateTimeConverter.date_to_serial(DateTime.current)
